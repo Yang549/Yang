@@ -4,55 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Style</title>
+    <title>黑客帝国风格页面</title>
     <style>
         body {
             background-color: black;
-            color: lime;
+            color: green;
             font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        h1 {
-            text-align: center;
-            border-bottom: 2px solid lime;
-            padding-bottom: 10px;
-        }
-
-        p {
-            margin: 10px 0;
-        }
-
-       .code-section {
-            background-color: #111;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        button {
-            background-color: lime;
-            color: black;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 3px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-family: 'Courier New', Courier, monospace;
+        #matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
-    <h1>神秘的自我介绍</h1>
-    <p>嘿，我是[Yang]，游走在代码世界的“探索者”。</p >
-    <div class="code-section">
-        <p>技能清单：</p >
-        <p>[技能1] - 如同利剑般穿透网络防线</p >
-		<p>[技能2] - 大公司后台突破</p >
-        <p>[技能3] - 能在数据海洋里精准“打捞”有用信息。</p >
-    </div>
-    <button onclick="alert('加V o22uwhwie8！')">点击查看更多</button>
+    <div id="matrix"></div>
+    <script>
+        const matrix = document.getElementById('matrix');
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const symbols = alphabet.split('');
+        const columns = 100;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            matrix.innerHTML = '';
+            for (let i = 0; i < columns; i++) {
+                const span = document.createElement('span');
+                span.style.color = `hsl(0, 0%, ${Math.random() * 50 + 20}%)`;
+                span.style.fontSize = `${Math.random() * 10 + 10}px`;
+                span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                span.style.position = 'absolute';
+                span.style.top = `${drops[i] * 15}px`;
+                span.style.left = `${i * 15}px`;
+                matrix.appendChild(span);
+                if (drops[i] * 15 > innerHeight && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+            requestAnimationFrame(draw);
+        }
+
+        requestAnimationFrame(draw);
+    </script>
 </body>
 
 </html>
+ 
